@@ -3,20 +3,29 @@
     "target": "http://alfio:8080",
     "secure": false,
     "changeOrigin": true,
-    "logLevel": "debug"
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api": ""
+    }
   },
 
   "/file": {
     "target": "http://alfio:8080",
     "secure": false,
     "changeOrigin": true,
-    "logLevel": "debug"
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/file": ""
+    }
   },
 
   "/resources": {
     "target": "http://alfio:8080",
     "secure": false,
     "changeOrigin": true,
-    "logLevel": "debug"
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/resources": ""
+    }
   }
 }
