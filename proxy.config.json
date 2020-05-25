@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://localhost:8993",
+    "target": "http://172.16.1.52:8993",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
@@ -14,7 +14,7 @@
   },
 
   "/resources": {
-    "target": "http://localhost:8993",
+    "target": "http://172.16.1.52:8993",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
