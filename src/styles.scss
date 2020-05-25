@@ -1,3 +1,31 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$alfio-public-frontend-primary: mat-palette($mat-indigo);
+$alfio-public-frontend-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$alfio-public-frontend-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$alfio-public-frontend-theme: mat-light-theme($alfio-public-frontend-primary, $alfio-public-frontend-accent, $alfio-public-frontend-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($alfio-public-frontend-theme);
+
 /* You can add global styles to this file, and also import other style files */
 
 @import "./font.scss";
@@ -7,14 +35,24 @@ $font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "
 @import "~bootstrap/scss/variables";
 $custom-control-indicator-border-color: $gray-700;
 
-
 @import "~bootstrap/scss/bootstrap";
 
 
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
+@import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';  
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-angular-schedule/styles/material.css';
+
 .application-container {
-    background-color: white;
+    min-height: 100vh;
 }
 
 @include media-breakpoint-up(md) {
@@ -28,12 +66,17 @@ $custom-control-indicator-border-color: $gray-700;
     }
 }
 
+.full-width{
+    background-color: #00a1df;
+    //background-image: url('src/assets/img/background.png');
+    background-size:100% 100%;
+    color: white;
+}
 
 .block-button {
     width: 100%;
     display: block
 }
-
 
 html[lang=nl] .language-selector button[lang=nl],
 html[lang=de] .language-selector button[lang=de],
@@ -256,3 +299,10 @@ div.is-invalid ~ div.invalid-feedback {
 .btn-default:focus, .btn-default.focus {
     box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, 0.5);
 }
+html, body { height: 100%; }
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+body { margin: 0; font-family: 'Open Sans', sans-serif !important;}
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

@@ -7,8 +7,6 @@
   <app-countdown *ngIf="!expired" [validity]="reservationInfo.validity" (expired)="handleExpired($event)"></app-countdown>
 
   <form [formGroup]="overviewForm" (submit)="confirm()">
-
-
     <div class="page-header">
       <h2 translate="reservation-page.title"></h2>
     </div>

@@ -71,7 +71,7 @@ export class OverviewComponent implements OnInit {
   loadReservation(ev: Event) {
     this.reservationService.getReservationInfo(this.eventShortName, this.reservationId).subscribe(resInfo => {
       this.reservationInfo = resInfo;
-
+      console.log(resInfo);
       this.activePaymentMethods = this.reservationInfo.activePaymentMethods;
       let currentPaymentProxy: PaymentProxy = null;
       let selectedPaymentMethod: PaymentMethod = null;

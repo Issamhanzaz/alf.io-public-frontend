@@ -14,7 +14,8 @@ export class EventDatesComponent {
   @Input()
   displayIcon: boolean;
 
-  constructor(public translate: TranslateService) { }
+  constructor(public translate: TranslateService) { 
+  }
 
   get displayTimeZoneInfo(): boolean {
     return shouldDisplayTimeZoneInfo(this.dateValidityProvider);

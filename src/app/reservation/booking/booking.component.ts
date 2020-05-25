@@ -81,7 +81,6 @@ export class BookingComponent implements OnInit, AfterViewInit {
           this.ticketCounts += t.tickets.length;
         });
 
-
         // auto complete (copy by default first/lastname + email to ticket) is enabled only if we have only
         // one ticket
         if (this.ticketCounts === 1 && this.event.assignmentConfiguration.enableAttendeeAutocomplete) {
@@ -153,6 +152,18 @@ export class BookingComponent implements OnInit, AfterViewInit {
 
   submitForm(): void {
     this.removeUnnecessaryFields();
+
+
+    for(let tc of this.reservationInfo.ticketsByCategory){
+      for(let ticket of tc.tickets){
+        ['firstName', 'lastName', 'email'].forEach(field => {
+          const val = this.contactAndTicketsForm.get(field).value;
+          this.contactAndTicketsForm.get(`tickets.${ticket.uuid}.${field}`).setValue(val);
+        });
+      }
+    }
+    console.log(this.reservationInfo.ticketsByCategory);
+
     this.reservationService.validateToOverview(this.eventShortName, this.reservationId, this.contactAndTicketsForm.value, this.translate.currentLang).subscribe(res => {
       if (res.success) {
         this.router.navigate(['event', this.eventShortName, 'reservation', this.reservationId, 'overview']);

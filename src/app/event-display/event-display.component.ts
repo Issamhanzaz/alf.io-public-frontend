@@ -59,6 +59,10 @@ export class EventDisplayComponent implements OnInit {
 
   private dynamicDiscount: DynamicDiscount;
 
+  voormiddag: any[] = [];
+  voormiddagSorted: any[] = [];
+  namiddag: any[] = [];
+  namiddagSorted: any[] = [];
   // https://alligator.io/angular/reactive-forms-formarray-dynamic-fields/
 
   constructor(
@@ -72,7 +76,6 @@ export class EventDisplayComponent implements OnInit {
     private analytics: AnalyticsService) { }
 
   ngOnInit(): void {
-
     const code = this.route.snapshot.queryParams['code'];
     const errors = this.route.snapshot.queryParams['errors'];
     if (errors) {
@@ -85,10 +88,25 @@ export class EventDisplayComponent implements OnInit {
       zip(this.eventService.getEvent(eventShortName), this.eventService.getEventTicketsInfo(eventShortName)).subscribe( ([event, itemsByCat]) => {
         this.event = event;
 
+        for(var i = 0; i < itemsByCat["ticketCategories"].length; i++){
+          if(JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Voormiddag")){
+              this.voormiddag.push(itemsByCat["ticketCategories"][i]);
+          }
+        }
+      
+        for(var i = 0; i < itemsByCat["ticketCategories"].length; i++){
+          if(JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Namiddag")){
+              this.namiddag.push(itemsByCat["ticketCategories"][i]);
+          }
+        }        
+
         this.i18nService.setPageTitle('show-event.header.title', event.displayName);
 
+        var alle: any[] = [];
+        alle = [ ...this.voormiddag, ...this.namiddag];
         this.reservationForm = this.formBuilder.group({
-          reservation: this.formBuilder.array(this.createItems(itemsByCat.ticketCategories)),
+          // reservation: this.formBuilder.array(this.createItems(itemsByCat.ticketCategories)),
+          reservation: this.formBuilder.array(this.createItems(alle)),
           additionalService: this.formBuilder.array([]),
           captcha: null,
           promoCode: null

@@ -18,7 +18,7 @@ import {
   faEdit, faClone, faHandshake, faBuilding, faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { faPaypal, faStripe, faApplePay, faIdeal } from '@fortawesome/free-brands-svg-icons';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { NgbTooltipModule, NgbModalModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTooltipModule, NgbModalModule, NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { BookingComponent } from './reservation/booking/booking.component';
@@ -63,8 +63,13 @@ import { MolliePaymentProxyComponent } from './payment/mollie-payment-proxy/moll
 import { PaymentMethodSelectorComponent } from './reservation/payment-method-selector/payment-method-selector.component';
 import { AnimatedDotsComponent } from './reservation/animated-dots/animated-dots.component';
 import { EventDatesComponent } from './event-dates/event-dates.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
+import { ListBoxModule } from '@syncfusion/ej2-angular-dropdowns';
 
+import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
+import { CompanyInfoComponent } from './company-info/company-info.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -116,12 +121,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     MolliePaymentProxyComponent,
     PaymentMethodSelectorComponent,
     AnimatedDotsComponent,
-    EventDatesComponent
+    EventDatesComponent,
+    CompanyInfoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ScheduleModule,
+    ListBoxModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-CSRF-TOKEN',
@@ -139,7 +147,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgbTooltipModule,
     NgSelectModule,
     NgbModalModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    NoopAnimationsModule,
+    NgbModule,
+    NgbPaginationModule, 
+    NgbAlertModule
   ],
   providers: [],
   bootstrap: [AppComponent],

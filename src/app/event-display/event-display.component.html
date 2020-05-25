@@ -1,22 +1,21 @@
 <div *ngIf="event" class="add-margin-bottom">
     <header><app-event-header [event]="event"></app-event-header></header>
-    <main>
 
-    <hr>
+    <main>
 
     <div class="row">
         <div [ngClass]="{'col-md-7': displayMap, 'col-md-12': !displayMap}">
           <app-event-summary [event]="event" [dateValidityProvider]="event"></app-event-summary>
         </div>
-        <div class="col-md-5" *ngIf="displayMap"><img [src]="event.mapUrl" class="img-responsive margin-auto" [alt]="event.location"></div>
     </div>
 
     <hr>
+    <app-stepper [currentStep]="1" ></app-stepper>
 
-    <div class="markdown-content" [innerHTML]="event.description[translate.currentLang]"></div>
+    <!-- <div class="markdown-content" [innerHTML]="event.description[translate.currentLang]"></div> -->
 
-    <div #tickets></div>
-    <h2 class="mt-4 mb-4">{{'show-event.tickets' | translate}} <span *ngIf="ticketsLeftCountVisible()" class="badge badge-warning ml-2">{{"show-event.tickets.left" | translate: {'0': event.availableTicketsCount} }}</span></h2>
+    <!-- <div #tickets></div>
+    <h2 class="mt-4 mb-4">{{'show-event.tickets' | translate}} <span *ngIf="ticketsLeftCountVisible()" class="badge badge-warning ml-2">{{"show-event.tickets.left" | translate: {'0': event.availableTicketsCount} }}</span></h2> -->
 
     <div class="alert alert-danger" role="alert" *ngIf="globalErrors && globalErrors.length > 0">
       <div *ngFor="let err of globalErrors"><strong>{{err.code | translate: err.arguments}}</strong></div>
@@ -25,7 +24,6 @@
     <div class="alert alert-success" role="alert" *ngIf="dynamicDiscountMessage">
         <span [innerHTML]="dynamicDiscountMessage"></span>
     </div>
-
     <!-- begin waiting list -->
     <div *ngIf="waitingList && !waitingListRequestSubmitted" class="alert alert-warning" role="alert">
       <ng-container *ngIf="preSales">
@@ -36,6 +34,7 @@
           <h3 class="wMarginBottom" translate="show-event.sold-out.header"></h3>
           <h4 translate="show-event.sold-out.message"></h4>
       </ng-container>
+      
       <hr/>
       <form [formGroup]="waitingListForm" (submit)="submitWaitingListRequest(event.shortName, waitingListForm.value)">
           <div class="form-group">
@@ -91,30 +90,73 @@
         <h4 translate="show-event.sold-out.subscription-complete"></h4>
       </div>
     </div>
+    
     <!-- end waiting list -->
-
     <form [formGroup]="reservationForm" (submit)="submitForm(event.shortName, reservationForm.value)" *ngIf="ticketCategories">
       <div class="alert alert-warning text-center" role="alert" *ngIf="ticketCategories.length == 0">
         <h3 translate="show-event.sold-out.header"></h3>
       </div>
-      <div *ngFor="let category of ticketCategories;let counter = index" formArrayName="reservation">
-        <app-item-card [currentLang]="translate.currentLang" [item]="category" [formGroupName]="''+counter" [parentFormGroup]="reservationFormItem(reservationForm, counter)" [additionalClass]="category.accessRestricted ? 'ticket-category-restricted border-warning shadow-sm ': ''">
-          <span class="item-title">
-            {{category.name}} <span class="d-inline badge badge-warning ml-2" *ngIf="ticketsLeftCountVisibleForCategory(category)">{{"show-event.tickets.left" | translate: {'0': category.availableTickets} }}</span>
-          </span>
-          <div class="item-price">
-            <span *ngIf="category.free" translate="common.free"></span>
-            <span *ngIf="!category.free">
-              <app-price-tag [event]="event" [formattedPrice]="category.formattedFinalPrice" [showTaxDetails]="true" [discountedPrice]="category.formattedDiscountedPrice" [showDiscount]="category.hasDiscount"></app-price-tag>
+
+      <!-- VOORMIDDAG -->
+      <div class="row" style="border-radius: 20px;border-color:white;justify-content: center; border: solid;background-color: #f7f7f7;">
+        <h1 style="color: #00a1df;">Voormiddag</h1>
+      </div>
+      <div class="row">
+        <br>
+        <div *ngFor="let category of voormiddag;let counter = index" class="col-md-4" formArrayName="reservation">
+          <div class="col-sm-2">
+          </div> 
+          <app-item-card [currentLang]="translate.currentLang" [item]="category" [formGroupName]="''+counter" [parentFormGroup]="reservationFormItem(reservationForm, counter)" [additionalClass]="category.accessRestricted ? 'ticket-category-restricted border-warning shadow-sm ': ''">
+            <span class="item-title">
+              {{category.name}} <span class="d-inline badge badge-warning ml-2" *ngIf="ticketsLeftCountVisibleForCategory(category)">{{"show-event.tickets.left" | translate: {'0': category.availableTickets} }}</span>
             </span>
-          </div>
-          <div class="item-qty-selector">
-              <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, counter)"
-                [category]="category"
-                [quantityRange]="ticketCategoryAmount[category.id]"
-                (valueChange)="selectionChange()"></app-ticket-quantity-selector>
-          </div>
-        </app-item-card>
+            <div class="item-price">
+              <span *ngIf="category.free" translate="common.free"></span>
+              <span *ngIf="!category.free">
+                <app-price-tag [event]="event" [formattedPrice]="category.formattedFinalPrice" [showTaxDetails]="true" [discountedPrice]="category.formattedDiscountedPrice" [showDiscount]="category.hasDiscount"></app-price-tag>
+              </span>
+            </div>
+            <div class="item-qty-selector">
+                <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, counter)"
+                  [category]="category"
+                  [quantityRange]="ticketCategoryAmount[category.id]"
+                  (valueChange)="selectionChange()"></app-ticket-quantity-selector>
+            </div>
+          </app-item-card>
+          <div class="col-sm-2">
+          </div> 
+        </div>
+      </div>
+
+      <!-- NAMIDDAG -->
+      <div class="row" style="border-radius: 20px;border-color:white;margin-top:30px;justify-content: center; border: solid;background-color: #f7f7f7;">
+        <h1 style="color: #00a1df;">Namiddag</h1>
+      </div>
+      <div class="row">
+        <br>
+        <div *ngFor="let category of namiddag;let counter = index" class="col-md-4" formArrayName="reservation">
+          <div class="col-sm-2">
+          </div> 
+          <app-item-card [currentLang]="translate.currentLang" [item]="category" [formGroupName]="''+counter" [parentFormGroup]="reservationFormItem(reservationForm, counter)" [additionalClass]="category.accessRestricted ? 'ticket-category-restricted border-warning shadow-sm ': ''">
+            <span class="item-title">
+              {{category.name}} <span class="d-inline badge badge-warning ml-2" *ngIf="ticketsLeftCountVisibleForCategory(category)">{{"show-event.tickets.left" | translate: {'0': category.availableTickets} }}</span>
+            </span>
+            <div class="item-price">
+              <span *ngIf="category.free" translate="common.free"></span>
+              <span *ngIf="!category.free">
+                <app-price-tag [event]="event" [formattedPrice]="category.formattedFinalPrice" [showTaxDetails]="true" [discountedPrice]="category.formattedDiscountedPrice" [showDiscount]="category.hasDiscount"></app-price-tag>
+              </span> 
+            </div>
+            <div class="item-qty-selector">
+                <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, counter)"
+                  [category]="category"
+                  [quantityRange]="ticketCategoryAmount[category.id]"
+                  (valueChange)="selectionChange()"></app-ticket-quantity-selector>
+            </div>
+          </app-item-card>
+          <div class="col-sm-2">
+          </div> 
+        </div>
       </div>
 
       <div class="mt-4 text-muted" *ngIf="expiredCategories.length > 0">
@@ -199,7 +241,7 @@
       <app-recaptcha [apiKey]="event.captchaConfiguration.recaptchaApiKey" (recaptchaResponse)="handleRecaptchaResponse($event)" *ngIf="event.captchaConfiguration.captchaForTicketSelection && event.captchaConfiguration.recaptchaApiKey"></app-recaptcha>
 
       <hr class="mt-5">
-      <app-event-footer-links [event]="event"></app-event-footer-links>
+      <!-- <app-event-footer-links [event]="event"></app-event-footer-links> -->
 
       <div class="row d-flex justify-content-between mobile-add-margin-bottom">
         <div class="col-md-5 order-md-1 col-12"><button type="submit" class="block-button btn btn-success" translate="show-event.continue"></button></div>
@@ -207,5 +249,5 @@
       </div>
     </form>
 
-    </main>
+  </main>
 </div>

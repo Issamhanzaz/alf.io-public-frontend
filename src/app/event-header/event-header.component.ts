@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Event } from '../model/event';
 import { I18nService } from '../shared/i18n.service';
 import { removeDOMNode } from '../shared/event.service';
+import { DateValidity } from '../model/date-validity';
 
 @Component({
   selector: 'app-event-header',
@@ -12,7 +13,9 @@ export class EventHeaderComponent implements OnInit, OnDestroy {
 
   @Input()
   event: Event;
-
+  @Input()
+  dateValidityProvider: DateValidity;
+  
   schemaElem: HTMLScriptElement;
 
   constructor(private i18nService: I18nService) {
