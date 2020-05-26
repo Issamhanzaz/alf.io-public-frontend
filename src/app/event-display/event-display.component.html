@@ -96,11 +96,20 @@
       <div class="alert alert-warning text-center" role="alert" *ngIf="ticketCategories.length == 0">
         <h3 translate="show-event.sold-out.header"></h3>
       </div>
-
-      <!-- VOORMIDDAG -->
-      <div class="row" style="border-radius: 20px;border-color:white;justify-content: center; border: solid;background-color: #f7f7f7;">
-        <h1 style="color: #00a1df;">Voormiddag</h1>
+<ngb-accordion [closeOthers]="true" activeIds="static-1">
+  <ngb-panel id="static-1">
+    <ng-template ngbPanelTitle style="margin-top:30px;justify-content: center;">
+      <div class="row">
+        <div class=col-sm-10>
+        <h3 style="color: #00a1df;">Voormiddag</h3>
       </div>
+        <div class="col-sm-2" style="justify-content: center; padding-top: 3%; padding-bottom: 1%;">
+          <i class="fas fa-angle-double-down"></i>
+        </div>
+      </div>    
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <!-- VOORMIDDAG -->
       <div class="row">
         <br>
         <div *ngFor="let category of voormiddag;let counter = index" class="col-md-4" formArrayName="reservation">
@@ -128,14 +137,25 @@
         </div>
       </div>
 
-      <!-- NAMIDDAG -->
-      <div class="row" style="border-radius: 20px;border-color:white;margin-top:30px;justify-content: center; border: solid;background-color: #f7f7f7;">
-        <h1 style="color: #00a1df;">Namiddag</h1>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel id="static-2">
+    <ng-template ngbPanelTitle>
+      <div class="row" style="border-radius: 20px;border-color:white;margin-top:30px;justify-content: center;">
+        <div class=col-sm-10>
+          <h3 style="color: #00a1df;">Namiddag</h3>
+        </div>
+      <div class="col-sm-2" style="justify-content: center; padding-top: 3%; padding-bottom: 1%;">
+        <i class="fas fa-angle-double-down"></i>
       </div>
+    </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <!-- NAMIDDAG -->
       <div class="row">
         <br>
         <div *ngFor="let category of namiddag;let counter = index" class="col-md-4" formArrayName="reservation">
-          <div class="col-sm-2">
+          <div cm ,lass="col-sm-2">
           </div> 
           <app-item-card [currentLang]="translate.currentLang" [item]="category" [formGroupName]="''+counter" [parentFormGroup]="reservationFormItem(reservationForm, counter)" [additionalClass]="category.accessRestricted ? 'ticket-category-restricted border-warning shadow-sm ': ''">
             <span class="item-title">
@@ -158,6 +178,9 @@
           </div> 
         </div>
       </div>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
 
       <div class="mt-4 text-muted" *ngIf="expiredCategories.length > 0">
         <div class="text-center">

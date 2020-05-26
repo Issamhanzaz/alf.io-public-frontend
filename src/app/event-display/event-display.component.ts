@@ -63,6 +63,7 @@ export class EventDisplayComponent implements OnInit {
   voormiddagSorted: any[] = [];
   namiddag: any[] = [];
   namiddagSorted: any[] = [];
+  firstClicked: boolean = true;
   // https://alligator.io/angular/reactive-forms-formarray-dynamic-fields/
 
   constructor(
@@ -309,4 +310,8 @@ export class EventDisplayComponent implements OnInit {
     return (this.event.mapUrl && this.event.mapUrl.length > 0) && !this.isEventOnline;
   }
 
+  changeClicked(): boolean{
+    this.firstClicked != this.firstClicked;
+    return this.firstClicked;
+  }
 }
