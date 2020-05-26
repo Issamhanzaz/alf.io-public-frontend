@@ -136,7 +136,7 @@
           </div> 
         </div>
       </div>
-
+  
     </ng-template>
   </ngb-panel>
   <ngb-panel id="static-2">
@@ -151,11 +151,11 @@
     </div>
     </ng-template>
     <ng-template ngbPanelContent>
-      <!-- NAMIDDAG -->
+      <!-- Namiddag -->
       <div class="row">
         <br>
         <div *ngFor="let category of namiddag;let counter = index" class="col-md-4" formArrayName="reservation">
-          <div cm ,lass="col-sm-2">
+          <div class="col-sm-2">
           </div> 
           <app-item-card [currentLang]="translate.currentLang" [item]="category" [formGroupName]="''+counter" [parentFormGroup]="reservationFormItem(reservationForm, counter)" [additionalClass]="category.accessRestricted ? 'ticket-category-restricted border-warning shadow-sm ': ''">
             <span class="item-title">
@@ -165,7 +165,7 @@
               <span *ngIf="category.free" translate="common.free"></span>
               <span *ngIf="!category.free">
                 <app-price-tag [event]="event" [formattedPrice]="category.formattedFinalPrice" [showTaxDetails]="true" [discountedPrice]="category.formattedDiscountedPrice" [showDiscount]="category.hasDiscount"></app-price-tag>
-              </span> 
+              </span>
             </div>
             <div class="item-qty-selector">
                 <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, counter)"
