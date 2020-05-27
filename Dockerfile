@@ -10,12 +10,10 @@ COPY . .
 
 RUN npm run build --prod
 
-FROM  confluent/postgres-bw:0.1
-
-RUN ["apt-get", "update"]
-
-RUN ["apt-get", "install", "-y", "vim"]
-
 FROM nginx:1.15.8-alpine
+
+RUN rm -rf /etc/nginx/conf.d/default.conf
+
+COPY --from=node /usr/src/default.conf /etc/nginx/conf.d
 
 COPY --from=node /usr/src/app/dist/alfio-public-frontend /usr/share/nginx/html
