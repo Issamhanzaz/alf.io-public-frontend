@@ -65,8 +65,7 @@ import { AnimatedDotsComponent } from './reservation/animated-dots/animated-dots
 import { EventDatesComponent } from './event-dates/event-dates.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
-import { ListBoxModule } from '@syncfusion/ej2-angular-dropdowns';
+
 
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { CompanyInfoComponent } from './company-info/company-info.component';
@@ -128,8 +127,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ScheduleModule,
-    ListBoxModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-CSRF-TOKEN',
