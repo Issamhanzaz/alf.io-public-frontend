@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.config.json",
-    "build": "ng build --aot=true --buildOptimizer=true --prod=true --watch=true",
+    "build": "ng build --aot=true --buildOptimizer=true --prod=true",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -31,11 +31,7 @@
     "@ng-select/ng-select": "^4.0.0",
     "@ngx-translate/core": "^12.1.1",
     "@ngx-translate/http-loader": "^4.0.0",
-    "@syncfusion/ej2-angular-calendars": "^18.1.53",
-    "@syncfusion/ej2-angular-dropdowns": "^18.1.53",
-    "@syncfusion/ej2-angular-schedule": "^18.1.52",
     "@types/countdown": "0.0.7",
-    "angular-material-calendar": "^0.2.14",
     "bootstrap": "^4.4.0",
     "core-js": "^2.6.9",
     "countdown": "^2.6.0",
