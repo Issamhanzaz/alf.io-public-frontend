@@ -1,12 +1,12 @@
 <div *ngIf="event && dateValidityProvider">
   <!-- <h2 translate="ticket.event-info" class="mt-4 mb-4 d-none d-md-block"></h2> -->
 
-  <div style="text-align: center;">
-    <dl class="row">
+  <div>
+    <dl class="row" style="justify-content: center;">
         <!-- <dt class="col-1 text-muted"><fa-icon [icon]="['far', 'building']" a11yRole="presentation"></fa-icon></dt>
         <dd class="col-11">{{'show-event.by'|translate}} <strong><a [href]="'mailto:'+ event.organizationEmail">{{event.organizationName}}</a></strong></dd>
         <dt class="col-1 text-muted"><fa-icon [icon]="['far', 'calendar-alt']" [title]="'ticket.date-time' | translate"></fa-icon></dt> -->
-        <dd class="col-11">
+        <dd >
           <app-event-dates [dateValidityProvider]="dateValidityProvider"></app-event-dates>
         </dd>
         <!-- <dt class="col-1 text-muted"><fa-icon [icon]="['far', 'calendar-plus']" a11yRole="presentation"></fa-icon></dt>

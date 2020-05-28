@@ -16,6 +16,7 @@ import {ItemsByCategory, TicketCategoryForWaitingList} from '../model/items-by-c
 import {EventCode, DynamicDiscount} from '../model/event-code';
 import {AnalyticsService} from '../shared/analytics.service';
 import {ErrorDescriptor} from '../model/validated-response';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-event-display',
@@ -74,7 +75,8 @@ export class EventDisplayComponent implements OnInit {
     private formBuilder: FormBuilder,
     public translate: TranslateService,
     private i18nService: I18nService,
-    private analytics: AnalyticsService) { }
+    private analytics: AnalyticsService,
+    private _location: Location) { }
 
   ngOnInit(): void {
     const code = this.route.snapshot.queryParams['code'];
@@ -125,6 +127,10 @@ export class EventDisplayComponent implements OnInit {
         }
       });
     });
+  }
+
+  backClicked() {
+    this.router.navigate([`/`]);
   }
 
   private applyItemsByCat(itemsByCat: ItemsByCategory) {

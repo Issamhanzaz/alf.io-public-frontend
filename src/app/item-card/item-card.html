@@ -7,9 +7,19 @@
 
 
   <div class="card-body" style="color: #00a1df">
-    <div class="item-content-except-desc">
       <div class="row">
-        <div class="col-sm-10">
+        <div class="col-sm-12">
+          <!-- <hr class="d-md-none" *ngIf="item.description[currentLang] && item.description[currentLang].length > 0" /> -->
+          <div class="card-sale-period">
+            <ng-content select=".item-qty-selector" ></ng-content>
+          </div>
+          <!-- <div class="card-sale-period">
+            <app-item-sale-period [item]="item" [currentLang]="currentLang"></app-item-sale-period>
+          </div> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
           <!-- <hr class="d-md-none" *ngIf="item.description[currentLang] && item.description[currentLang].length > 0" /> -->
           <div class="card-sale-period">
             <div class="markdown-content mt-2" [innerHTML]="item.description[currentLang]"></div>
@@ -18,14 +28,8 @@
             <app-item-sale-period [item]="item" [currentLang]="currentLang"></app-item-sale-period>
           </div> -->
         </div>
-        <div class="col-sm-2">
-          <div class="card-qty-container">
-            <ng-content select=".item-qty-selector" style="width:60px;" ></ng-content>
-          </div>
-        </div>
+      </div>
     </div>
-    </div>
-  </div>
 
 
   <div class="card-footer" style="color: #00a1df">

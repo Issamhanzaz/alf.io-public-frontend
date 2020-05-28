@@ -57,6 +57,7 @@ import { StepperComponent } from './stepper/stepper.component';
 import { TicketQuantitySelectorComponent } from './ticket-quantity-selector/ticket-quantity-selector.component';
 import { UpdateTicketComponent } from './update-ticket/update-ticket.component';
 import { ViewTicketComponent } from './view-ticket/view-ticket.component';
+import { MultisafepayPaymentProxyComponent } from './payment/multisafepay-payment-proxy/multisafepay-payment-proxy.component';
 
 
 
@@ -115,7 +116,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PaymentMethodSelectorComponent,
     AnimatedDotsComponent,
     EventDatesComponent,
-    CompanyInfoComponent
+    CompanyInfoComponent,
+    MultisafepayPaymentProxyComponent
   ],
   imports: [
     BrowserModule,

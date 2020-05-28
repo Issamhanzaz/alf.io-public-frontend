@@ -64,9 +64,22 @@ $custom-control-indicator-border-color: $gray-700;
     color: white;
 }
 
+.thisStepUnderline{
+    border-bottom: solid;
+}
+
 .block-button {
     width: 100%;
     display: block
+}
+
+.finished {
+    color: greenyellow;
+}
+
+.thisStep{
+    color: white;
+    font-weight: bold;
 }
 
 html[lang=nl] .language-selector button[lang=nl],

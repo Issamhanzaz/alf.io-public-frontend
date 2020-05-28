@@ -5,6 +5,8 @@
       <option *ngFor="let qty of quantityRange" [value]="qty">{{qty}}</option>
     </select>
   </ng-container>
-  <span class="font-weight-bold" *ngIf="!category.saleableAndLimitNotReached && category.soldOutOrLimitReached" translate="show-event.sold-out"></span>
-  <span class="font-weight-bold" *ngIf="!category.saleableAndLimitNotReached && !category.soldOutOrLimitReached" translate="show-event.not-available"></span>
+  <div *ngIf="!category.saleableAndLimitNotReached && category.soldOutOrLimitReached">
+    <span class="font-weight-bold" translate="show-event.sold-out"></span>
+  </div>
+  <!-- <span class="font-weight-bold" *ngIf="!category.saleableAndLimitNotReached && !category.soldOutOrLimitReached" translate="show-event.not-available"></span> -->
 </div>
