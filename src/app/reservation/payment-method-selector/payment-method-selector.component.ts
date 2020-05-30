@@ -28,7 +28,6 @@ export class PaymentMethodSelectorComponent implements OnInit {
             this.overviewForm.get('paymentProxy').setValue(selectedMethod.paymentProxy);
         });
     }
-
     get activePaymentMethods(): {[key in PaymentMethod]?: PaymentProxyWithParameters} {
         return this.reservationInfo.activePaymentMethods;
     }

@@ -60,6 +60,12 @@
                 [method]="selectedPaymentMethod"
                 (paymentProvider)="registerCurrentPaymentProvider($event)">
             </app-mollie-payment-proxy>
+            <app-multisafepay-payment-proxy
+            [proxy]="selectedPaymentProxy"
+            [method]="selectedPaymentMethod"
+            [reservation]="reservationInfo"
+            (paymentProvider)="registerCurrentPaymentProvider($event)">
+            </app-multisafepay-payment-proxy>
         </div>
         
     </div>

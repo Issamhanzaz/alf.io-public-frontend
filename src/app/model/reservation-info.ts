@@ -37,7 +37,7 @@ export class ReservationInfo {
 
     // group related info
     containsCategoriesLinkedToGroups: boolean;
-    //
+    // 
 
     activePaymentMethods: {[key in PaymentMethod]?: PaymentProxyWithParameters};
 }
@@ -75,7 +75,7 @@ export class SummaryRow {
 
 export type ReservationStatus = 'PENDING' | 'IN_PAYMENT' | 'EXTERNAL_PROCESSING_PAYMENT' |
                                 'WAITING_EXTERNAL_CONFIRMATION' | 'OFFLINE_PAYMENT' | 'DEFERRED_OFFLINE_PAYMENT' |
-                                'COMPLETE' | 'STUCK' | 'CANCELLED' | 'CREDIT_NOTE_ISSUED' | 'NOT_FOUND';
+                                'COMPLETE' | 'STUCK' | 'CANCELLED' | 'CREDIT_NOTE_ISSUED' | 'NOT_FOUND' | 'COMPLETED';
 
 export type ItalianEInvoicingReferenceType = 'ADDRESSEE_CODE' | 'PEC' | 'NONE';
 

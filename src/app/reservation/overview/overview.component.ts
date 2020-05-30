@@ -13,6 +13,8 @@ import { AnalyticsService } from 'src/app/shared/analytics.service';
 import { ErrorDescriptor, ValidatedResponse } from 'src/app/model/validated-response';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReservationExpiredComponent } from '../expired-notification/reservation-expired.component';
+import { PaypalPaymentProxyComponent } from 'src/app/payment/paypal-payment-proxy/paypal-payment-proxy.component';
+import { MultisafepayPaymentProxyComponent } from 'src/app/payment/multisafepay-payment-proxy/multisafepay-payment-proxy.component';
 
 @Component({
   selector: 'app-overview',
@@ -37,6 +39,12 @@ export class OverviewComponent implements OnInit {
   selectedPaymentProvider: PaymentProvider;
 
   activePaymentMethods: {[key in PaymentMethod]?: PaymentProxyWithParameters};
+  // customPaymentMethod: {[key in PaymentMethod]?: PaymentProxyWithParameters} = {
+  //   'IDEAL': {
+  //       paymentProxy: "MULTISAFEPAY",
+  //       parameters: {}
+  //   }
+  // }
 
   constructor(
     private route: ActivatedRoute,
@@ -72,7 +80,10 @@ export class OverviewComponent implements OnInit {
     this.reservationService.getReservationInfo(this.eventShortName, this.reservationId).subscribe(resInfo => {
       this.reservationInfo = resInfo;
       console.log(resInfo);
+      console.log(this.reservationInfo.activePaymentMethods);
       this.activePaymentMethods = this.reservationInfo.activePaymentMethods;
+      // Object.assign(this.activePaymentMethods, this.customPaymentMethod);
+
       let currentPaymentProxy: PaymentProxy = null;
       let selectedPaymentMethod: PaymentMethod = null;
 
