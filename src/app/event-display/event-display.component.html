@@ -138,11 +138,17 @@
                 <app-price-tag [event]="event" [formattedPrice]="category.formattedFinalPrice" [showTaxDetails]="true" [discountedPrice]="category.formattedDiscountedPrice" [showDiscount]="category.hasDiscount"></app-price-tag>
               </span>
             </div>
-            <div class="item-qty-selector">
-                <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, counter)"
+            <div class="item-qty-selector" *ngIf="checkQuantity(category.name)">
+                  <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, counter)"
                   [category]="category"
-                  [quantityRange]="ticketCategoryAmount[category.id]"
+                  [quantityRange]="aantal"
                   (valueChange)="selectionChange()"></app-ticket-quantity-selector>
+            </div>
+            <div class="item-qty-selector" *ngIf="!checkQuantity(category.name)">
+              <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, counter)"
+              [category]="category"
+              [quantityRange]="ticketCategoryAmount[category.id]"
+              (valueChange)="selectionChange()"></app-ticket-quantity-selector>
             </div>
           </app-item-card>
           <!-- <div class="col-sm-2">

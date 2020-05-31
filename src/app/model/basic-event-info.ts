@@ -7,7 +7,7 @@ export class BasicEventInfo implements DateValidity {
     format: EventFormat;
     displayName: string;
     location: string;
-
+    
     // date related
     timeZone: string;
     sameDay: boolean;

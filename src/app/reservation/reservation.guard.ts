@@ -28,19 +28,11 @@ export class ReservationGuard implements CanActivate {
     private checkAndRedirect(eventShortName: string, reservationId: string, component: any): Observable<boolean | UrlTree> {
         return this.reservationService.getReservationStatusInfo(eventShortName, reservationId)
             .pipe(catchError(err => of({ status: <ReservationStatus>'NOT_FOUND', validatedBookingInformation: false })), map(reservation => {
-                console.log(reservation);
-                console.log(reservation.status);
-                if(reservation.status != "COMPLETED" && reservation.status != "COMPLETE"){
-                    console.log("Send api call to backend");
-                    //service ga checken
-                }
-                var multiSafePaycheck = "";
                 const selectedComponent = getCorrespondingController(reservation.status, reservation.validatedBookingInformation);
-                return true;
-                // if (component === selectedComponent) {
-                //     return true;
-                // }
-                // return this.router.createUrlTree(getRouteFromComponent(selectedComponent, eventShortName, reservationId), {replaceUrl: true});
+                if (component === selectedComponent) {
+                    return true;
+                }
+                return this.router.createUrlTree(getRouteFromComponent(selectedComponent, eventShortName, reservationId), {replaceUrl: true});
             }));
     }
 }

@@ -49,6 +49,7 @@ export class EventDisplayComponent implements OnInit {
 
   eventCode: EventCode;
   eventCodeError: boolean;
+  aantal: number[] = [0,1,2];
 
   displayPromoCodeForm: boolean;
   promoCodeForm: FormGroup;
@@ -319,5 +320,9 @@ export class EventDisplayComponent implements OnInit {
   changeClicked(): boolean{
     this.firstClicked != this.firstClicked;
     return this.firstClicked;
+  }
+
+  checkQuantity(string) : boolean {
+    return string != "Kinderen";
   }
 }

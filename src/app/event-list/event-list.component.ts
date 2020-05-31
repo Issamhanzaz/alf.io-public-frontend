@@ -19,15 +19,9 @@ export class EventListComponent implements OnInit {
   events: Array<BasicEventInfo[]>;
   languages: Language[];
 
-  elements: any = [
-    {id: 1, first: 'Mark', last: 'Otto', handle: '@mdo'},
-    {id: 2, first: 'Jacob', last: 'Thornton', handle: '@fat'},
-    {id: 3, first: 'Larry', last: 'the Bird', handle: '@twitter'},
-  ];
-
-  headElements = ['ID', 'First', 'Last', 'Handle'];
-
-
+  page = 1;
+  pageSize = 4;
+ 
   constructor(
     private eventService: EventService,
     private i18nService: I18nService,
@@ -35,6 +29,7 @@ export class EventListComponent implements OnInit {
     public translate: TranslateService,
     private info: InfoService,
     private analytics: AnalyticsService) { }
+    collectionSize;
 
     public ngOnInit(): void {
       zip(this.eventService.getEvents(), this.info.getInfo()).subscribe(([res, info]) => {
@@ -45,6 +40,7 @@ export class EventListComponent implements OnInit {
           // thanks to https://gist.github.com/webinista/11240585#gistcomment-2363393
           this.events = res.reduce((prevVal: any, currVal: any, currIndx: number, array: Array<BasicEventInfo>) =>
                         !(currIndx % chunkSize) ? prevVal.concat([array.slice(currIndx, currIndx + chunkSize)]) : prevVal, []);
+          this.collectionSize = this.events.length
           this.analytics.pageView(info.analyticsConfiguration);
         }
       });
@@ -62,5 +58,21 @@ export class EventListComponent implements OnInit {
 
     public isEventOnline(event: BasicEventInfo): boolean {
       return event.format === 'ONLINE';
+    }
+  
+    public ticketsAvailable(basicEventInfo: BasicEventInfo): boolean{
+      zip(this.eventService.getEvent(basicEventInfo.shortName), this.eventService.getEventTicketsInfo(basicEventInfo.shortName)).subscribe( ([event, itemsByCat]) => {
+        for(var i = 0; i < itemsByCat["ticketCategories"].length; i++){
+          if(JSON.stringify(itemsByCat["ticketCategories"][i]["soldOutOrLimitReached"]) == "true"){
+            return false;
+          }
+        }
+        return true;
+      });
+      return true;
+    }
+
+    get eventslist(): any[]{
+      return this.events;
     }
 }
