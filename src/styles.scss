@@ -51,15 +51,15 @@ $custom-control-indicator-border-color: $gray-700;
         background-color: #E5E5E5;
     }
     .application-container {
-        margin-top: $border-radius;
-        margin-bottom: $border-radius;
+        // margin-top: $border-radius;
+        // margin-bottom: $border-radius;
         border-radius: $border-radius;
     }
 }
 
 .full-width{
-    background-color: #00a1df;
-    //background-image: url('src/assets/img/background.png');
+    // background-color: #00a1df;
+    background-image: url('assets/img/achtergrond.jpg');
     background-size:100% 100%;
     color: white;
 }

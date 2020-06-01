@@ -1,6 +1,6 @@
 <div *ngIf="event" class="add-margin-bottom">
     <div style="text-align: center;">
-      <img src="https://boegafun.nl/templates/hot_kindergarten/images/BoegaFun-Logo-website-221x115.png">
+      <img  class="mobile" src="assets/img/BoegaFun-Logo-website-221x115.png">
     </div>
     <header><app-event-header [event]="event"></app-event-header></header>
     
@@ -101,6 +101,8 @@
         <h4 translate="show-event.sold-out.subscription-complete"></h4>
       </div>
     </div>
+
+    
     
     <!-- end waiting list -->
     <form [formGroup]="reservationForm" (submit)="submitForm(event.shortName, reservationForm.value)" *ngIf="ticketCategories">
@@ -129,7 +131,7 @@
                     <div class="item-price">
                       <span *ngIf="category.free" translate="common.free"></span>
                       <span *ngIf="!category.free">
-                        <app-price-tag [event]="event" [formattedPrice]="category.formattedFinalPrice" [showTaxDetails]="true" [discountedPrice]="category.formattedDiscountedPrice" [showDiscount]="category.hasDiscount"></app-price-tag>
+                        <app-price-tag [event]="event" [formattedPrice]="category.formattedFinalPrice" [showTaxDetails]="true" [discountedPrice]="category.formattedDiscountedPrice" [showDiscount]="category.hasDiscount"></app-price-tag> per kind
                       </span>
                     </div>
                     <div class="item-qty-selector" *ngIf="checkQuantity(category.name)">
@@ -165,24 +167,24 @@
                 <div *ngFor="let category of dagdeel2;let counter = index" class="col-md-4" formArrayName="reservation">
                   <div class="col-sm-2">
                   </div> 
-                  <app-item-card [currentLang]="translate.currentLang" [item]="category" [formGroupName]="''+counter" [parentFormGroup]="reservationFormItem(reservationForm, counter)" [additionalClass]="category.accessRestricted ? 'ticket-category-restricted border-warning shadow-sm ': ''">
+                  <app-item-card [currentLang]="translate.currentLang" [item]="category" [formGroupName]="''+((3-1)*2+counter)" [parentFormGroup]="reservationFormItem(reservationForm, (2-1)*2+counter)" [additionalClass]="category.accessRestricted ? 'ticket-category-restricted border-warning shadow-sm ': ''">
                     <span class="item-title">
                       {{category.name}} <span class="d-inline badge badge-warning ml-2" *ngIf="ticketsLeftCountVisibleForCategory(category)">{{"show-event.tickets.left" | translate: {'0': category.availableTickets} }}</span>
                     </span>
                     <div class="item-price">
                       <span *ngIf="category.free" translate="common.free"></span>
                       <span *ngIf="!category.free">
-                        <app-price-tag [event]="event" [formattedPrice]="category.formattedFinalPrice" [showTaxDetails]="true" [discountedPrice]="category.formattedDiscountedPrice" [showDiscount]="category.hasDiscount"></app-price-tag>
+                        <app-price-tag [event]="event" [formattedPrice]="category.formattedFinalPrice" [showTaxDetails]="true" [discountedPrice]="category.formattedDiscountedPrice" [showDiscount]="category.hasDiscount"></app-price-tag> per kind
                       </span>
                     </div>
                     <div class="item-qty-selector" *ngIf="checkQuantity(category.name)">
-                      <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, counter)"
+                      <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, (2-1)*2+counter)"
                       [category]="category"
                       [quantityRange]="aantal"
                       (valueChange)="selectionChange()"></app-ticket-quantity-selector>
                     </div>
                     <div class="item-qty-selector" *ngIf="!checkQuantity(category.name)">
-                      <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, counter)"
+                      <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, (2-1)*2+counter)"
                       [category]="category"
                       [quantityRange]="ticketCategoryAmount[category.id]"
                       (valueChange)="selectionChange()"></app-ticket-quantity-selector>
@@ -207,25 +209,25 @@
                 <br>
                 <div *ngFor="let category of dagdeel3;let counter = index" class="col-md-4" formArrayName="reservation">
                   <div class="col-sm-2">
-                  </div> 
-                  <app-item-card [currentLang]="translate.currentLang" [item]="category" [formGroupName]="''+counter" [parentFormGroup]="reservationFormItem(reservationForm, counter)" [additionalClass]="category.accessRestricted ? 'ticket-category-restricted border-warning shadow-sm ': ''">
+                  </div> <!-- (categorienummer - 1) * 2 + count -->
+                  <app-item-card [currentLang]="translate.currentLang" [item]="category" [formGroupName]="''+((3-1)*2+counter)" [parentFormGroup]="reservationFormItem(reservationForm, (3-1)*2+counter)" [additionalClass]="category.accessRestricted ? 'ticket-category-restricted border-warning shadow-sm ': ''">
                     <span class="item-title">
                       {{category.name}} <span class="d-inline badge badge-warning ml-2" *ngIf="ticketsLeftCountVisibleForCategory(category)">{{"show-event.tickets.left" | translate: {'0': category.availableTickets} }}</span>
                     </span>
                     <div class="item-price">
                       <span *ngIf="category.free" translate="common.free"></span>
                       <span *ngIf="!category.free">
-                        <app-price-tag [event]="event" [formattedPrice]="category.formattedFinalPrice" [showTaxDetails]="true" [discountedPrice]="category.formattedDiscountedPrice" [showDiscount]="category.hasDiscount"></app-price-tag>
+                        <app-price-tag [event]="event" [formattedPrice]="category.formattedFinalPrice" [showTaxDetails]="true" [discountedPrice]="category.formattedDiscountedPrice" [showDiscount]="category.hasDiscount"></app-price-tag> per kind
                       </span>
                     </div>
                     <div class="item-qty-selector" *ngIf="checkQuantity(category.name)">
-                      <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, counter)"
+                      <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, (3-1)*2+counter)"
                       [category]="category"
                       [quantityRange]="aantal"
                       (valueChange)="selectionChange()"></app-ticket-quantity-selector>
                     </div>
                     <div class="item-qty-selector" *ngIf="!checkQuantity(category.name)">
-                      <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, counter)"
+                      <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, (3-1)*2+counter)"
                       [category]="category"
                       [quantityRange]="ticketCategoryAmount[category.id]"
                       (valueChange)="selectionChange()"></app-ticket-quantity-selector>
@@ -329,7 +331,13 @@
       </div>
       <br/>
       <div class="text-center mt-1">
-        <a href="https://www.hsbusiness.nl" [attr.title]="'alfio.credits' | translate" target="_blank" rel="noreferrer noopener" translate="alfio.credits"></a>
+        <div style="text-align: center;">
+          <h5 style="font-weight:bold;">Ticket system developed by</h5>
+          <a href="https://www.hsbusiness.nl">
+            <img  class="mobile" src="assets/img/hsbusinessLogo.png">
+          </a>
+        </div>
+        <!-- <a href="https://www.hsbusiness.nl" [attr.title]="'alfio.credits' | translate" target="_blank" rel="noreferrer noopener" translate="alfio.credits"></a> -->
       </div>
     </form>
   </main>

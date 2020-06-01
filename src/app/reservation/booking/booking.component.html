@@ -102,10 +102,26 @@
       </div>
     </div>
     <br/>
-    <div class="text-center mt-1">
+    <!-- <div class="text-center mt-1">
       <a href="https://www.hsbusiness.nl" [attr.title]="'alfio.credits' | translate" target="_blank" rel="noreferrer noopener" translate="alfio.credits"></a>
+    </div> -->
+    <div class="text-center mt-1 stickbottom">
+      <div style="text-align: center;">
+        <h5 style="font-weight:bold;">Ticket system developed by</h5>
+        <a href="https://www.hsbusiness.nl">
+          <img  class="mobile" src="assets/img/hsbusinessLogo.png">
+        </a>
+      </div>
+      <!-- <a href="https://www.hsbusiness.nl" [attr.title]="'alfio.credits' | translate" target="_blank" rel="noreferrer noopener" translate="alfio.credits"></a> -->
     </div>
   </form>
 </div>
 
 </app-reservation>
+
+<style>
+  .stickbottom{
+    position: sticky;
+    bottom: 0;
+  }
+</style>

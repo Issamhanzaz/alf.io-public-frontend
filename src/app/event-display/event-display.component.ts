@@ -1,22 +1,24 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {EventService} from '../shared/event.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
-import {ReservationService} from '../shared/reservation.service';
-import {Event as AlfioEvent} from '../model/event';
-import {TranslateService} from '@ngx-translate/core';
-import {TicketCategory} from '../model/ticket-category';
-import {ReservationRequest} from '../model/reservation-request';
-import {handleServerSideValidationError} from '../shared/validation-helper';
-import {zip} from 'rxjs';
-import {AdditionalService} from '../model/additional-service';
-import {I18nService} from '../shared/i18n.service';
-import {WaitingListSubscriptionRequest} from '../model/waiting-list-subscription-request';
-import {ItemsByCategory, TicketCategoryForWaitingList} from '../model/items-by-category';
-import {EventCode, DynamicDiscount} from '../model/event-code';
-import {AnalyticsService} from '../shared/analytics.service';
-import {ErrorDescriptor} from '../model/validated-response';
-import {Location} from '@angular/common';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { EventService } from '../shared/event.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { ReservationService } from '../shared/reservation.service';
+import { Event as AlfioEvent } from '../model/event';
+import { TranslateService } from '@ngx-translate/core';
+import { TicketCategory } from '../model/ticket-category';
+import { ReservationRequest } from '../model/reservation-request';
+import { handleServerSideValidationError } from '../shared/validation-helper';
+import { zip } from 'rxjs';
+import { AdditionalService } from '../model/additional-service';
+import { I18nService } from '../shared/i18n.service';
+import { WaitingListSubscriptionRequest } from '../model/waiting-list-subscription-request';
+import { ItemsByCategory, TicketCategoryForWaitingList } from '../model/items-by-category';
+import { EventCode, DynamicDiscount } from '../model/event-code';
+import { AnalyticsService } from '../shared/analytics.service';
+import { ErrorDescriptor } from '../model/validated-response';
+import { Location } from '@angular/common';
+import { TransactionInitializationToken } from '../model/payment';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'app-event-display',
@@ -35,7 +37,7 @@ export class EventDisplayComponent implements OnInit {
   reservationForm: FormGroup;
   globalErrors: ErrorDescriptor[] = [];
   //
-  ticketCategoryAmount: {[key: number]: number[]};
+  ticketCategoryAmount: { [key: number]: number[] };
   //
 
   //
@@ -49,7 +51,7 @@ export class EventDisplayComponent implements OnInit {
 
   eventCode: EventCode;
   eventCodeError: boolean;
-  aantal: number[] = [0,1,2];
+  aantal: number[] = [0, 1, 2];
 
   displayPromoCodeForm: boolean;
   promoCodeForm: FormGroup;
@@ -88,23 +90,25 @@ export class EventDisplayComponent implements OnInit {
     this.route.params.subscribe(params => {
       const eventShortName = params['eventShortName'];
 
-      zip(this.eventService.getEvent(eventShortName), this.eventService.getEventTicketsInfo(eventShortName)).subscribe( ([event, itemsByCat]) => {
+      zip(this.eventService.getEvent(eventShortName), this.eventService.getEventTicketsInfo(eventShortName)).subscribe(([event, itemsByCat]) => {
         this.event = event;
 
-        for(var i = 0; i < itemsByCat["ticketCategories"].length; i++){
-          if(JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 1:")){
+        for (var i = 0; i < itemsByCat["ticketCategories"].length; i++) {
+          if (JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 1:")) {
             this.dagdeel1.push(itemsByCat["ticketCategories"][i]);
-          }else if(JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 2:")){
+
+          } else if (JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 2:")) {
             this.dagdeel2.push(itemsByCat["ticketCategories"][i]);
-            }else if(JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 3:")){
-              this.dagdeel3.push(itemsByCat["ticketCategories"][i]);
+
+          } else if (JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 3:")) {
+            this.dagdeel3.push(itemsByCat["ticketCategories"][i]);
           }
         }
-      
-        this.i18nService.setPageTitle('show-event.header.title', event.displayName);
 
+        this.i18nService.setPageTitle('show-event.header.title', event.displayName);
+        console.log(this.dagdeel2);
         var alle: any[] = [];
-        alle = [ ...this.dagdeel1, ...this.dagdeel2, ...this.dagdeel3];
+        alle = [...this.dagdeel1, ...this.dagdeel2, ...this.dagdeel3];
         this.reservationForm = this.formBuilder.group({
           // reservation: this.formBuilder.array(this.createItems(itemsByCat.ticketCategories)),
           reservation: this.formBuilder.array(this.createItems(alle)),
@@ -168,10 +172,14 @@ export class EventDisplayComponent implements OnInit {
   }
 
   private createItems(ticketCategories: TicketCategory[]): FormGroup[] {
-    return ticketCategories.map(category => this.formBuilder.group({ticketCategoryId: category.id, amount: 0}));
+    console.log(ticketCategories);
+    return ticketCategories.map(category => this.formBuilder.group({ ticketCategoryId: category.id, amount: 0 }));
   }
 
   submitForm(eventShortName: string, reservation: ReservationRequest) {
+    console.log(eventShortName)
+    console.log(JSON.stringify(reservation))
+    console.log("TESTTTTT")
     const request = reservation;
     if (reservation.additionalService != null && reservation.additionalService.length > 0) {
       request.additionalService = reservation.additionalService.filter(as => (as.amount != null && as.amount > 0) || (as.quantity != null && as.quantity > 0));
@@ -195,7 +203,7 @@ export class EventDisplayComponent implements OnInit {
   }
 
   submitWaitingListRequest(eventShortName: string, waitingListSubscriptionRequest: WaitingListSubscriptionRequest) {
-    console.log(eventShortName);
+    console.log("ENTERED")
     this.eventService.submitWaitingListSubscriptionRequest(eventShortName, waitingListSubscriptionRequest).subscribe(res => {
       this.waitingListRequestSubmitted = true;
       this.waitingListRequestResult = res.value;
@@ -240,7 +248,7 @@ export class EventDisplayComponent implements OnInit {
   applyPromoCode(): void {
     const promoCode = this.promoCodeForm.get('promoCode').value;
     this.globalErrors = [];
-    this.internalApplyPromoCode(promoCode, () => {});
+    this.internalApplyPromoCode(promoCode, () => { });
   }
 
   removePromoCode(): void {
@@ -257,12 +265,15 @@ export class EventDisplayComponent implements OnInit {
   }
 
   ticketsLeftCountVisible(): boolean {
-     return this.event.availableTicketsCount != null
-       && this.event.availableTicketsCount > 0
-       && this.ticketCategories.every(tc => !tc.bounded);
+    return this.event.availableTicketsCount != null
+      && this.event.availableTicketsCount > 0
+      && this.ticketCategories.every(tc => !tc.bounded);
   }
 
   reservationFormItem(parent: FormGroup, counter: number): FormGroup {
+
+    // for(let i =0; i < parent.get('reservation') as FormArray).length)
+    // parent.get('reservation') as FormArray).value[i].
     return (parent.get('reservation') as FormArray).at(counter) as FormGroup;
   }
 
@@ -314,12 +325,40 @@ export class EventDisplayComponent implements OnInit {
     return (this.event.mapUrl && this.event.mapUrl.length > 0) && !this.isEventOnline;
   }
 
-  changeClicked(): boolean{
+  // get dagdeel(): any[]{
+  //   this.ticketCategories.map((s => {
+  //     console.log(s.description);
+  //     if(s.description["nl"] == "voormiddag"){
+
+  //     }
+  //     // if(s == ""){
+
+  //     // }
+  //   })
+  //   // this.ticketCategories.map(s => s.description, {
+  //   //   if(s == "dagdeel1"){
+
+  //   //   }
+  //   // })
+  //   return;
+  // }
+
+  indexstring(string: TicketCategory): number {
+    // console.log("Naam in: " + string.name)
+    // console.log("Id in: " + string.id)
+    // console.log("ID IN ARRAY: " + this.ticketCategories.find(x => x.id == string.id).id)
+    // console.log("Naam IN ARRAY: " + this.ticketCategories.find(x => x.id == string.id).name)
+    // console.log("INDEX: " + this.ticketCategories.findIndex(x => x.id == string.id))
+    return this.ticketCategories.findIndex(x => x.id == string.id);
+  }
+
+  changeClicked(): boolean {
     this.firstClicked != this.firstClicked;
     return this.firstClicked;
   }
 
-  checkQuantity(string) : boolean {
+  checkQuantity(string): boolean {
     return string != "Kinderen";
   }
+
 }

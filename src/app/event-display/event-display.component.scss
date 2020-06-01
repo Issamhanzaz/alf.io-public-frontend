@@ -29,7 +29,6 @@
 }
 
 ::ng-deep #static-1-header{
-  background-color: #00a1df !important;
   border: none;
   text-align: center;
 }
@@ -44,36 +43,44 @@
 }
 
 ::ng-deep #static-1 > .card-body{
-  background-color: #00a1df !important;
+  // background-color: #00a1df !important;
   border: none;
+  border-radius: 30px;
 }
 
 ::ng-deep #static-2-header{
-  background-color: #00a1df !important;
   border: none;
   text-align: center;
 }
 
 ::ng-deep #static-2 > .card-body{
-  background-color: #00a1df !important;
+  // background-color: #00a1df !important;
   border: none;
+  border-radius: 30px;
 }
 
+
 ::ng-deep #static-3-header{
-  background-color: #00a1df !important;
   border: none;
   text-align: center;
 }
 
 ::ng-deep #static-3 > .card-body{
-  background-color: #00a1df !important;
+  // background-color: #00a1df !important;
   border: none;
+  border-radius: 30px;
 }
 
 ::ng-deep .accordion > .card{
+  background-color: transparent !important;
   border: none;
 }
 
 .middle{
   justify-content: center;
 }
+.mobile{
+  max-width: 100%;
+  height: auto;
+}
+

@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AnalyticsService } from '../shared/analytics.service';
 import { InfoService } from '../shared/info.service';
 import { zip } from 'rxjs';
+import { TicketCategory } from '../model/ticket-category';
 
 @Component({
   selector: 'app-event-list',
@@ -71,7 +72,7 @@ export class EventListComponent implements OnInit {
       });
       return true;
     }
-
+    
     get eventslist(): any[]{
       return this.events;
     }
