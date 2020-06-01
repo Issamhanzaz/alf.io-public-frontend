@@ -61,10 +61,9 @@ export class EventDisplayComponent implements OnInit {
 
   private dynamicDiscount: DynamicDiscount;
 
-  voormiddag: any[] = [];
-  voormiddagSorted: any[] = [];
-  namiddag: any[] = [];
-  namiddagSorted: any[] = [];
+  dagdeel1: any[] = [];
+  dagdeel2: any[] = [];
+  dagdeel3: any[] = [];
   firstClicked: boolean = true;
   // https://alligator.io/angular/reactive-forms-formarray-dynamic-fields/
 
@@ -93,21 +92,19 @@ export class EventDisplayComponent implements OnInit {
         this.event = event;
 
         for(var i = 0; i < itemsByCat["ticketCategories"].length; i++){
-          if(JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Voormiddag")){
-              this.voormiddag.push(itemsByCat["ticketCategories"][i]);
+          if(JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 1:")){
+            this.dagdeel1.push(itemsByCat["ticketCategories"][i]);
+          }else if(JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 2:")){
+            this.dagdeel2.push(itemsByCat["ticketCategories"][i]);
+            }else if(JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 3:")){
+              this.dagdeel3.push(itemsByCat["ticketCategories"][i]);
           }
         }
       
-        for(var i = 0; i < itemsByCat["ticketCategories"].length; i++){
-          if(JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Namiddag")){
-              this.namiddag.push(itemsByCat["ticketCategories"][i]);
-          }
-        }        
-
         this.i18nService.setPageTitle('show-event.header.title', event.displayName);
 
         var alle: any[] = [];
-        alle = [ ...this.voormiddag, ...this.namiddag];
+        alle = [ ...this.dagdeel1, ...this.dagdeel2, ...this.dagdeel3];
         this.reservationForm = this.formBuilder.group({
           // reservation: this.formBuilder.array(this.createItems(itemsByCat.ticketCategories)),
           reservation: this.formBuilder.array(this.createItems(alle)),
@@ -198,7 +195,7 @@ export class EventDisplayComponent implements OnInit {
   }
 
   submitWaitingListRequest(eventShortName: string, waitingListSubscriptionRequest: WaitingListSubscriptionRequest) {
-
+    console.log(eventShortName);
     this.eventService.submitWaitingListSubscriptionRequest(eventShortName, waitingListSubscriptionRequest).subscribe(res => {
       this.waitingListRequestSubmitted = true;
       this.waitingListRequestResult = res.value;

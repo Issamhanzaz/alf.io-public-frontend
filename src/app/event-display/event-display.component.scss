@@ -17,3 +17,63 @@
 .text-muted .btn-link {
   color: $text-muted;
 }
+
+.rij{
+  border-radius: 20px;
+  background-color: white; 
+  padding:3%; 
+}
+
+.titel{
+  color:#00a1df;
+}
+
+::ng-deep #static-1-header{
+  background-color: #00a1df !important;
+  border: none;
+  text-align: center;
+}
+
+.center {
+  margin: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  display: inline-block;
+}
+
+::ng-deep #static-1 > .card-body{
+  background-color: #00a1df !important;
+  border: none;
+}
+
+::ng-deep #static-2-header{
+  background-color: #00a1df !important;
+  border: none;
+  text-align: center;
+}
+
+::ng-deep #static-2 > .card-body{
+  background-color: #00a1df !important;
+  border: none;
+}
+
+::ng-deep #static-3-header{
+  background-color: #00a1df !important;
+  border: none;
+  text-align: center;
+}
+
+::ng-deep #static-3 > .card-body{
+  background-color: #00a1df !important;
+  border: none;
+}
+
+::ng-deep .accordion > .card{
+  border: none;
+}
+
+.middle{
+  justify-content: center;
+}

@@ -2,7 +2,7 @@
 
 <div *ngIf="reservationInfo && event">
 
-  <app-stepper [currentStep]="2" [free]="reservationInfo.orderSummary.free"></app-stepper>
+  <!-- <app-stepper [currentStep]="2" [free]="reservationInfo.orderSummary.free"></app-stepper> -->
 
   <app-countdown *ngIf="!expired" [validity]="reservationInfo.validity" (expired)="handleExpired($event)"></app-countdown>
 
@@ -91,8 +91,7 @@
 
     <div class="mt-3 mb-3" aria-hidden="true"><strong>*</strong>{{' '}}<span translate="common.required-fields"></span></div>
     <hr class="mt-5">
-    <app-event-footer-links [event]="event"></app-event-footer-links>
-
+    <!-- <app-event-footer-links [event]="event"></app-event-footer-links> -->
 
     <div class="row d-flex justify-content-between mobile-add-margin-bottom">
       <div class="col-md-5 order-md-1 col-12">
@@ -101,6 +100,10 @@
       <div class="col-md-5 order-md-0 col-12">
         <button type="button" class="block-button btn btn-light" (click)="cancelPendingReservation()" translate="reservation-page.cancel"></button>
       </div>
+    </div>
+    <br/>
+    <div class="text-center mt-1">
+      <a href="https://www.hsbusiness.nl" [attr.title]="'alfio.credits' | translate" target="_blank" rel="noreferrer noopener" translate="alfio.credits"></a>
     </div>
   </form>
 </div>

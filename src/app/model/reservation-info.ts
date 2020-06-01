@@ -37,7 +37,7 @@ export class ReservationInfo {
 
     // group related info
     containsCategoriesLinkedToGroups: boolean;
-    // 
+    //
 
     activePaymentMethods: {[key in PaymentMethod]?: PaymentProxyWithParameters};
 }

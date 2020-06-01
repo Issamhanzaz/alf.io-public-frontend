@@ -58,12 +58,7 @@ import { TicketQuantitySelectorComponent } from './ticket-quantity-selector/tick
 import { UpdateTicketComponent } from './update-ticket/update-ticket.component';
 import { ViewTicketComponent } from './view-ticket/view-ticket.component';
 import { MultisafepayPaymentProxyComponent } from './payment/multisafepay-payment-proxy/multisafepay-payment-proxy.component';
-
-
-
-
-
-
+import { CancelledComponent } from './reservation/cancelled/cancelled.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -117,7 +112,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AnimatedDotsComponent,
     EventDatesComponent,
     CompanyInfoComponent,
-    MultisafepayPaymentProxyComponent
+    MultisafepayPaymentProxyComponent,
+    CancelledComponent
   ],
   imports: [
     BrowserModule,
