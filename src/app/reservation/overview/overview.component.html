@@ -48,11 +48,10 @@
     </div>
 
 
-    <div *ngIf="!reservationInfo.orderSummary.free" class="page-header mt-2"><h2 translate="reservation-page.payment"></h2></div>
-
-    <div class="alert alert-danger mt-3 mb-3" role="alert" *ngIf="globalErrors && globalErrors.length > 0">
-      <div *ngFor="let err of globalErrors"><strong>{{err.code | translate: err.arguments}}</strong></div>
-    </div>
+    <div *ngIf="!reservationInfo.orderSummary.free" class="page-header mt-2" ><h2 translate="reservation-page.payment"></h2></div>
+      <div class="alert alert-danger mt-3 mb-3" role="alert" *ngIf="globalErrors && globalErrors.length > 0">
+        <div *ngFor="let err of globalErrors"><strong>{{err.code | translate: err.arguments}}</strong></div>
+      </div>
 
     <div class="alert mt-3 mb-3 text-center" role="alert" *ngIf="submitting" [class.alert-warning]="paymentStatusNotification && paymentStatusNotification.indeterminate">
       <div class="progress mb-3">
@@ -65,26 +64,26 @@
       </div>
     </div>
 
-    <div *ngIf="!reservationInfo.orderSummary.free" [class.invisible]="submitting">
-      <app-payment-method-selector [event]="event" [reservationInfo]="reservationInfo" [overviewForm]="overviewForm" (selectedPaymentProvider)="registerCurrentPaymentProvider($event)"></app-payment-method-selector>
-    </div>
+    <div *ngIf="!reservationInfo.orderSummary.free" [class.invisible]="submitting" style="background-color: white;padding: 2%; border-radius: 20px;">
+        <app-payment-method-selector [event]="event" [reservationInfo]="reservationInfo" [overviewForm]="overviewForm" (selectedPaymentProvider)="registerCurrentPaymentProvider($event)"></app-payment-method-selector>
 
 
-    <div *ngIf="reservationInfo.orderSummary.free && event.captchaConfiguration.captchaForOfflinePaymentAndFree" class="mt-2 wMarginBottom">
-      <app-recaptcha [apiKey]="event.captchaConfiguration.recaptchaApiKey" (recaptchaResponse)="handleRecaptchaResponse($event)"></app-recaptcha>
-    </div>
+      <div *ngIf="reservationInfo.orderSummary.free && event.captchaConfiguration.captchaForOfflinePaymentAndFree" class="mt-2 wMarginBottom">
+        <app-recaptcha [apiKey]="event.captchaConfiguration.recaptchaApiKey" (recaptchaResponse)="handleRecaptchaResponse($event)"></app-recaptcha>
+      </div>
 
-    <div class="custom-control custom-checkbox" *ngIf="event.privacyPolicyUrl" [class.invisible]="submitting">
-        <input class="custom-control-input" id="privacyPolicyAccepted" formControlName="privacyPolicyAccepted" type="checkbox" aria-labelledby="privacy-policy-label">{{' '}} <!-- ugly, see  https://github.com/angular/angular/issues/21049 -->
-        <label for="privacyPolicyAccepted" class="custom-control-label" id="privacy-policy-label">
-          <span translate="reservation-page.privacy.prefix"></span>{{' '}}<a [attr.href]="event.privacyPolicyUrl" target="_blank" rel="noopener" translate="reservation-page.privacy.link.text"></a>{{' '}}<span translate="reservation-page.privacy.suffix"></span>
-        </label>
-    </div>
-    <div class="custom-control custom-checkbox" [class.invisible]="submitting" >
-        <input class="custom-control-input" id="termsAndConditionsAccepted" formControlName="termAndConditionsAccepted" type="checkbox" aria-labelledby="terms-conditions-label">
-        <label class="custom-control-label" for="termsAndConditionsAccepted" id="terms-conditions-label">
-          {{' '}}<span translate="reservation-page.tc.prefix"></span>{{' '}}<a [attr.href]="event.termsAndConditionsUrl" target="_blank" rel="noopener" translate="reservation-page.tc.link.text"></a>{{' '}}<span translate="reservation-page.tc.suffix"></span>
-        </label>
+      <div class="custom-control custom-checkbox" *ngIf="event.privacyPolicyUrl" [class.invisible]="submitting">
+          <input class="custom-control-input" id="privacyPolicyAccepted" formControlName="privacyPolicyAccepted" type="checkbox" aria-labelledby="privacy-policy-label">{{' '}} <!-- ugly, see  https://github.com/angular/angular/issues/21049 -->
+          <label for="privacyPolicyAccepted" class="custom-control-label" id="privacy-policy-label">
+            <span translate="reservation-page.privacy.prefix"></span>{{' '}}<a [attr.href]="event.privacyPolicyUrl" target="_blank" rel="noopener" translate="reservation-page.privacy.link.text"></a>{{' '}}<span translate="reservation-page.privacy.suffix"></span>
+          </label>
+      </div>
+      <div class="custom-control custom-checkbox" [class.invisible]="submitting" >
+          <input class="custom-control-input" id="termsAndConditionsAccepted" formControlName="termAndConditionsAccepted" type="checkbox" aria-labelledby="terms-conditions-label">
+          <label class="custom-control-label" for="termsAndConditionsAccepted" id="terms-conditions-label">
+            {{' '}}<span translate="reservation-page.tc.prefix"></span>{{' '}}<a [attr.href]="event.termsAndConditionsUrl" target="_blank" rel="noopener" translate="reservation-page.tc.link.text"></a>{{' '}}<span translate="reservation-page.tc.suffix"></span>
+          </label>
+      </div>
     </div>
 
     <div class="row d-flex justify-content-between mobile-add-margin-bottom mt-4" *ngIf="!submitting">
