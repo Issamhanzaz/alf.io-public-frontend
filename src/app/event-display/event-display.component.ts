@@ -15,7 +15,7 @@ import { WaitingListSubscriptionRequest } from '../model/waiting-list-subscripti
 import { ItemsByCategory, TicketCategoryForWaitingList } from '../model/items-by-category';
 import { EventCode, DynamicDiscount } from '../model/event-code';
 import { AnalyticsService } from '../shared/analytics.service';
-import { ErrorDescriptor } from '../model/validated-response';
+import { ErrorDescriptor, ValidatedResponse } from '../model/validated-response';
 import { Location } from '@angular/common';
 import { TransactionInitializationToken } from '../model/payment';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
@@ -94,19 +94,20 @@ export class EventDisplayComponent implements OnInit {
         this.event = event;
 
         for (var i = 0; i < itemsByCat["ticketCategories"].length; i++) {
-          if (JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 1:")) {
-            this.dagdeel1.push(itemsByCat["ticketCategories"][i]);
+          if(!JSON.stringify(itemsByCat["ticketCategories"][i]["name"]).includes("Terras")){
+            if (JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 1:")) {
+              this.dagdeel1.push(itemsByCat["ticketCategories"][i]);
 
-          } else if (JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 2:")) {
-            this.dagdeel2.push(itemsByCat["ticketCategories"][i]);
+            } else if (JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 2:")) {
+              this.dagdeel2.push(itemsByCat["ticketCategories"][i]);
 
-          } else if (JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 3:")) {
-            this.dagdeel3.push(itemsByCat["ticketCategories"][i]);
+            } else if (JSON.stringify(itemsByCat["ticketCategories"][i]["description"]).includes("Dagdeel 3:")) {
+              this.dagdeel3.push(itemsByCat["ticketCategories"][i]);
+            }
           }
         }
 
         this.i18nService.setPageTitle('show-event.header.title', event.displayName);
-        console.log(this.dagdeel2);
         var alle: any[] = [];
         alle = [...this.dagdeel1, ...this.dagdeel2, ...this.dagdeel3];
         this.reservationForm = this.formBuilder.group({
@@ -172,26 +173,48 @@ export class EventDisplayComponent implements OnInit {
   }
 
   private createItems(ticketCategories: TicketCategory[]): FormGroup[] {
-    console.log(ticketCategories);
     return ticketCategories.map(category => this.formBuilder.group({ ticketCategoryId: category.id, amount: 0 }));
   }
 
   submitForm(eventShortName: string, reservation: ReservationRequest) {
-    console.log(eventShortName)
-    console.log(JSON.stringify(reservation))
-    console.log("TESTTTTT")
-    const request = reservation;
-    if (reservation.additionalService != null && reservation.additionalService.length > 0) {
-      request.additionalService = reservation.additionalService.filter(as => (as.amount != null && as.amount > 0) || (as.quantity != null && as.quantity > 0));
-    }
-    this.reservationService.reserveTickets(eventShortName, request, this.translate.currentLang).subscribe(res => {
-      if (res.success) {
-        this.router.navigate(['event', eventShortName, 'reservation', res.value, 'book']);
+    let volwassenSelected : Boolean = false;
+    let kinderenSelected : Boolean = false;
+    const request = reservation
+    reservation.reservation.forEach(element => {
+      if(volwassenSelected == false){
+        if(this.ticketCategories.find(x => x.id === element.ticketCategoryId).name === "Volwassenen"){
+          if(element.amount != 0){
+            volwassenSelected = true;
+          }
+        }
       }
-    }, (err) => {
-      this.globalErrors = handleServerSideValidationError(err, this.reservationForm);
-      this.scrollToTickets();
     });
+
+    reservation.reservation.forEach(element => {
+      if(kinderenSelected == false){
+        if(this.ticketCategories.find(x => x.id === element.ticketCategoryId).name === "Kinderen"){
+          if(element.amount != 0){
+            kinderenSelected = true;
+          }
+        }
+      }
+    });
+    
+    if(volwassenSelected == true && kinderenSelected == true){
+      if (reservation.additionalService != null && reservation.additionalService.length > 0) {
+        request.additionalService = reservation.additionalService.filter(as => (as.amount != null && as.amount > 0) || (as.quantity != null && as.quantity > 0));
+      }
+      this.reservationService.reserveTickets(eventShortName, request, this.translate.currentLang).subscribe(res => {
+        if (res.success) {
+          this.router.navigate(['event', eventShortName, 'reservation', res.value, 'book']);
+        }
+      }, (err) => {
+        this.globalErrors = handleServerSideValidationError(err, this.reservationForm);
+        this.scrollToTickets();
+      });
+    }else{
+      alert("Kies minstens 1 kind en 1 volwassenen");
+    }
   }
 
   private scrollToTickets(): void {
@@ -203,7 +226,6 @@ export class EventDisplayComponent implements OnInit {
   }
 
   submitWaitingListRequest(eventShortName: string, waitingListSubscriptionRequest: WaitingListSubscriptionRequest) {
-    console.log("ENTERED")
     this.eventService.submitWaitingListSubscriptionRequest(eventShortName, waitingListSubscriptionRequest).subscribe(res => {
       this.waitingListRequestSubmitted = true;
       this.waitingListRequestResult = res.value;

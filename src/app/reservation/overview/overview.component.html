@@ -6,7 +6,7 @@
 
   <!-- <app-countdown *ngIf="!expired" [validity]="reservationInfo.validity" (expired)="handleExpired($event)"></app-countdown> -->
 
-  <form [formGroup]="overviewForm" (submit)="confirm()">
+  <form [formGroup]="overviewForm" (submit)="confirm()" style="color: black;">
     <div class="page-header">
       <h2 translate="reservation-page.title"></h2>
     </div>
@@ -80,7 +80,7 @@
           <span translate="reservation-page.privacy.prefix"></span>{{' '}}<a [attr.href]="event.privacyPolicyUrl" target="_blank" rel="noopener" translate="reservation-page.privacy.link.text"></a>{{' '}}<span translate="reservation-page.privacy.suffix"></span>
         </label>
     </div>
-    <div class="custom-control custom-checkbox" [class.invisible]="submitting">
+    <div class="custom-control custom-checkbox" [class.invisible]="submitting" >
         <input class="custom-control-input" id="termsAndConditionsAccepted" formControlName="termAndConditionsAccepted" type="checkbox" aria-labelledby="terms-conditions-label">
         <label class="custom-control-label" for="termsAndConditionsAccepted" id="terms-conditions-label">
           {{' '}}<span translate="reservation-page.tc.prefix"></span>{{' '}}<a [attr.href]="event.termsAndConditionsUrl" target="_blank" rel="noopener" translate="reservation-page.tc.link.text"></a>{{' '}}<span translate="reservation-page.tc.suffix"></span>

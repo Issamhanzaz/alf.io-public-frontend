@@ -15,6 +15,7 @@
       </div>
       <div class="row mt-2">
           <div class="col-sm-12" [innerHTML]="'reservation-page-complete.info-assign-email' | translate: {'0':reservationInfo.email}"></div>
+          <div class="col-sm-12">Let op: u ontvangt een aparte mail per aangeschaft ticket. Print deze allemaal uit of toon ze mobiel aan de ingang.</div>
       </div>
       <div class="row mt-3">
         <div class="col-12 col-md-5 mb-1 mb-md-0" [class.offset-md-2]="downloadBillingDocumentVisible" [class.offset-md-7]="!downloadBillingDocumentVisible">
@@ -105,9 +106,14 @@
         <a class="block-button btn btn-light" [attr.href]="event.websiteUrl" translate="to-event-site"></a>
       </div>
     </div>
-    <!-- <div class="text-center text-muted mt-3">{{'reservation-page-complete.order-information' | translate: {'0': reservationId, '1': reservationInfo.firstName + ' ' + reservationInfo.lastName} }}</div> -->
     <div class="text-center mt-1">
-      <a href="https://www.hsbusiness.nl" [attr.title]="'alfio.credits' | translate" target="_blank" rel="noreferrer noopener" translate="alfio.credits"></a>
+      <div style="text-align: center;">
+        <h5 style="font-weight:bold;">Ticket system developed by</h5>
+        <a href="https://www.hsbusiness.nl">
+          <img  class="mobile" src="assets/img/hsbusinessLogo.png">
+        </a>
+      </div>
+      <!-- <a href="https://www.hsbusiness.nl" [attr.title]="'alfio.credits' | translate" target="_blank" rel="noreferrer noopener" translate="alfio.credits"></a> -->
     </div>
   </div>
 </div>

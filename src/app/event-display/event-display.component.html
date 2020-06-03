@@ -170,13 +170,13 @@
                   <app-item-card [currentLang]="translate.currentLang" [item]="category" [formGroupName]="''+((3-1)*2+counter)" [parentFormGroup]="reservationFormItem(reservationForm, (2-1)*2+counter)" [additionalClass]="category.accessRestricted ? 'ticket-category-restricted border-warning shadow-sm ': ''">
                     <span class="item-title">
                       {{category.name}} <span class="d-inline badge badge-warning ml-2" *ngIf="ticketsLeftCountVisibleForCategory(category)">{{"show-event.tickets.left" | translate: {'0': category.availableTickets} }}</span>
-                    </span>
+                     </span>
                     <div class="item-price">
                       <span *ngIf="category.free" translate="common.free"></span>
                       <span *ngIf="!category.free">
                         <app-price-tag [event]="event" [formattedPrice]="category.formattedFinalPrice" [showTaxDetails]="true" [discountedPrice]="category.formattedDiscountedPrice" [showDiscount]="category.hasDiscount"></app-price-tag> per kind
                       </span>
-                    </div>
+                    </div> 
                     <div class="item-qty-selector" *ngIf="checkQuantity(category.name)">
                       <app-ticket-quantity-selector [parentGroup]="reservationFormItem(reservationForm, (2-1)*2+counter)"
                       [category]="category"
